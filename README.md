@@ -1,69 +1,65 @@
-# BÁO CÁO THỰC HÀNH KIỂM THỬ PHẦN MỀM BẰNG APACHE JMETER
+# BÁO CÁO THỰC HÀNH KIỂM THỬ HIỆU NĂNG BẰNG APACHE JMETER
 
 ## 1. Giới thiệu
 
-Apache JMeter là công cụ mã nguồn mở được sử dụng để kiểm thử hiệu năng của ứng dụng, máy chủ và dịch vụ web. Công cụ cho phép mô phỏng nhiều người dùng gửi yêu cầu đến hệ thống và thu thập các chỉ số như thời gian phản hồi, số lượng yêu cầu và tỷ lệ lỗi.
+Apache JMeter là công cụ mã nguồn mở được sử dụng để kiểm thử hiệu năng của website và ứng dụng. Công cụ cho phép mô phỏng nhiều người dùng truy cập hệ thống, gửi yêu cầu và thu thập các thông số như thời gian phản hồi, số lượng yêu cầu và tỷ lệ lỗi.
 
-Trong bài thực hành này, em sử dụng Apache JMeter phiên bản 5.6.3 để xây dựng và thực hiện một kịch bản kiểm thử HTTP đơn giản.
+Trong bài thực hành này, em sử dụng Apache JMeter để kiểm thử hiệu năng website Apache JMeter tại địa chỉ https://jmeter.apache.org/.
 
 ## 2. Mục tiêu
 
 - Làm quen với giao diện và cách sử dụng Apache JMeter.
-- Tạo Test Plan và Thread Group.
-- Gửi yêu cầu HTTP đến một website.
-- Theo dõi kết quả bằng View Results Tree.
-- Tổng hợp và phân tích số liệu bằng Summary Report.
-- Lưu kịch bản kiểm thử và báo cáo lên GitHub.
+- Xây dựng Test Plan để gửi yêu cầu HTTP đến website.
+- Mô phỏng 50 người dùng ảo truy cập website.
+- Thu thập và phân tích kết quả kiểm thử.
+- Sử dụng Git và GitHub để lưu trữ bài thực hành, báo cáo và ảnh minh chứng.
 
 ## 3. Công cụ sử dụng
 
-| Công cụ | Phiên bản hoặc thông tin |
+| Công cụ | Phiên bản hoặc mục đích |
 |---|---|
 | Apache JMeter | 5.6.3 |
-| Java | JDK 21 |
-| Visual Studio Code | Môi trường chỉnh sửa README |
+| Java JDK | 21 |
+| Visual Studio Code | Chỉnh sửa README và quản lý dự án |
 | Git | Quản lý phiên bản |
-| GitHub | Lưu trữ và nộp bài |
+| GitHub | Lưu trữ mã nguồn và báo cáo |
 
-## 4. Thiết lập kịch bản kiểm thử
-
-Website được sử dụng trong bài thực hành là trang chủ Apache JMeter: https://jmeter.apache.org/
+## 4. Cấu hình kiểm thử
 
 ### 4.1. Cấu hình Thread Group
 
-| Tham số | Giá trị |
-|---|---|
-| Name | Website Load Test |
-| Number of Threads (users) | 3 |
-| Ramp-up period | 3 giây |
+| Thông số | Giá trị |
+|---|---:|
+| Number of Threads (Users) | 50 |
+| Ramp-up Period | 10 giây |
 | Loop Count | 1 |
+| Số yêu cầu dự kiến | 50 |
 
-Kịch bản mô phỏng 3 người dùng, mỗi người gửi một yêu cầu trong một vòng lặp.
+Thread Group được cấu hình để mô phỏng 50 người dùng ảo. Thời gian Ramp-up là 10 giây, nghĩa là JMeter khởi tạo người dùng trong khoảng thời gian này. Mỗi người dùng thực hiện một vòng lặp.
 
 ### 4.2. Cấu hình HTTP Request
 
-| Tham số | Giá trị |
+| Thông số | Giá trị |
 |---|---|
-| Name | Open JMeter Website |
 | Protocol | HTTPS |
 | Server Name or IP | jmeter.apache.org |
 | Method | GET |
 | Path | / |
 
-HTTP Request được sử dụng để gửi yêu cầu GET đến trang chủ Apache JMeter.
+HTTP Request sử dụng phương thức GET để gửi yêu cầu truy cập trang chủ website.
 
-### 4.3. Các thành phần theo dõi kết quả
+### 4.3. Các Listener sử dụng
 
-- **View Results Tree:** Hiển thị chi tiết từng yêu cầu, mã phản hồi và nội dung phản hồi.
-- **Summary Report:** Tổng hợp số lượng yêu cầu, thời gian phản hồi, tỷ lệ lỗi và thông lượng.
+- **View Results Tree:** Quan sát kết quả từng yêu cầu và thông tin phản hồi từ máy chủ.
+- **Summary Report:** Tổng hợp số lượng mẫu, thời gian phản hồi, tỷ lệ lỗi và thông lượng.
 
-## 5. Hình ảnh minh họa
+## 5. Hình ảnh minh chứng
 
-### 5.1. Cấu hình Test Plan
+### 5.1. Tổng quan Test Plan
 
-![Cấu hình Test Plan](screenshots/01-test-plan.png)
+![Tổng quan Test Plan](screenshots/01-test-plan.png)
 
-### 5.2. Cấu hình Thread Group
+### 5.2. Cấu hình Thread Group với 50 người dùng
 
 ![Cấu hình Thread Group](screenshots/02-thread-group.png)
 
@@ -71,46 +67,51 @@ HTTP Request được sử dụng để gửi yêu cầu GET đến trang chủ 
 
 ![Cấu hình HTTP Request](screenshots/03-http-request.png)
 
-### 5.4. Kết quả trong View Results Tree
+### 5.4. Kết quả từng yêu cầu
 
-![Kết quả kiểm thử](screenshots/04-test-results.png)
+![Kết quả View Results Tree](screenshots/04-test-results.png)
 
-### 5.5. Báo cáo Summary Report
+### 5.5. Báo cáo tổng hợp Summary Report
 
-![Báo cáo tổng hợp](screenshots/05-summary-report.png)
+![Kết quả Summary Report](screenshots/05-summary-report.png)
 
 ## 6. Kết quả kiểm thử
 
-Sau khi thực hiện kịch bản kiểm thử với 3 người dùng mô phỏng, thu được các kết quả sau:
+Các chỉ số dưới đây cần được cập nhật theo Summary Report thực tế sau lần chạy 50 người dùng.
 
 | Chỉ số | Kết quả |
-|---|---:|
-| Samples | 3 |
-| Average | 7504,67 ms |
-| Min | 6527 ms |
-| Max | 8462 ms |
-| Error % | 0% |
-| Throughput | Cần đối chiếu với Summary Report |
+|---|---|
+| Tổng số yêu cầu (Samples) | Điền số liệu thực tế |
+| Thời gian phản hồi trung bình (Average) | Điền số liệu thực tế (ms) |
+| Thời gian phản hồi nhỏ nhất (Min) | Điền số liệu thực tế (ms) |
+| Thời gian phản hồi lớn nhất (Max) | Điền số liệu thực tế (ms) |
+| Tỷ lệ lỗi (Error %) | Điền số liệu thực tế |
+| Thông lượng (Throughput) | Điền số liệu thực tế |
 
-### 6.1. Phân tích kết quả
+### 6.1. Nhận xét kết quả
 
-Cả 3 yêu cầu đều nhận được mã phản hồi HTTP `200 OK`. Các kết quả được cung cấp không ghi nhận lỗi, tương ứng với tỷ lệ lỗi 0%.
+Sau khi thực hiện kiểm thử, em sử dụng Summary Report để đánh giá khả năng phản hồi của website.
 
-Thời gian phản hồi nhỏ nhất là 6527 ms, lớn nhất là 8462 ms và trung bình khoảng 7504,67 ms. Thời gian phản hồi giữa các yêu cầu có sự khác biệt.
+- **Samples:** Cho biết tổng số yêu cầu đã được thực hiện.
+- **Average:** Cho biết thời gian phản hồi trung bình của các yêu cầu.
+- **Min và Max:** Thể hiện thời gian phản hồi nhỏ nhất và lớn nhất.
+- **Error %:** Cho biết tỷ lệ yêu cầu xảy ra lỗi.
+- **Throughput:** Thể hiện số lượng yêu cầu được xử lý trong một đơn vị thời gian.
 
-Thông lượng cần được ghi nhận trực tiếp từ cột Throughput trong Summary Report của JMeter. Kết quả trên chỉ phản ánh lần kiểm thử nhỏ đã thực hiện, không đủ để kết luận về khả năng chịu tải tối đa của website.
+Thông qua các chỉ số trên, có thể đánh giá sơ bộ khả năng phản hồi của website trong lần kiểm thử. Tuy nhiên, kết quả chỉ phản ánh điều kiện thử nghiệm tại thời điểm chạy và không đủ để kết luận về giới hạn tải tối đa của hệ thống.
 
 ## 7. Kết luận
 
-Qua bài thực hành, em đã biết cách tạo một kịch bản kiểm thử HTTP bằng Apache JMeter, cấu hình số lượng người dùng mô phỏng và theo dõi kết quả thông qua View Results Tree và Summary Report.
+Qua bài thực hành, em đã làm quen với Apache JMeter, biết cách tạo Test Plan, cấu hình Thread Group, gửi yêu cầu HTTP và sử dụng các Listener để thu thập kết quả.
 
-Bài thực hành giúp em hiểu thêm cách thu thập, đọc và phân tích các chỉ số cơ bản trong kiểm thử hiệu năng phần mềm.
+Việc mô phỏng 50 người dùng giúp em hiểu rõ hơn cách kiểm thử hiệu năng và cách phân tích những chỉ số cơ bản như thời gian phản hồi, tỷ lệ lỗi và thông lượng. Báo cáo cùng hình ảnh minh chứng được lưu trữ trên GitHub để thuận tiện cho việc kiểm tra và đánh giá.
 
 ## 8. Tài liệu tham khảo
 
-1. Apache JMeter Official Website: https://jmeter.apache.org/
-2. Apache JMeter User Manual: https://jmeter.apache.org/usermanual/
+- Trang chủ Apache JMeter: https://jmeter.apache.org/
+- Tài liệu hướng dẫn Apache JMeter: https://jmeter.apache.org/usermanual/
+- Kho lưu trữ bài thực hành: https://github.com/hongtuoi0208/jmeter-performance-testing
 
-## 9. Repository
+## 9. Repository GitHub
 
-GitHub: https://github.com/hongtuoi0208/jmeter-performance-testing
+Link GitHub: https://github.com/hongtuoi0208/jmeter-performance-testing
