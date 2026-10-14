@@ -1,18 +1,18 @@
-# BÁO CÁO THỰC HÀNH KIỂM THỬ HIỆU NĂNG BẰNG APACHE JMETER
+# BÁO CÁO KIỂM THỬ HIỆU NĂNG BẰNG APACHE JMETER
 
 ## 1. Giới thiệu
 
-Apache JMeter là công cụ mã nguồn mở được sử dụng để kiểm thử hiệu năng của website và ứng dụng. Công cụ cho phép mô phỏng nhiều người dùng truy cập hệ thống, gửi yêu cầu và thu thập các thông số như thời gian phản hồi, số lượng yêu cầu và tỷ lệ lỗi.
+Apache JMeter là công cụ mã nguồn mở dùng để kiểm thử hiệu năng của website và ứng dụng. Công cụ cho phép mô phỏng nhiều người dùng gửi yêu cầu đến máy chủ, đồng thời thu thập các thông số như thời gian phản hồi, số lượng yêu cầu, tỷ lệ lỗi và thông lượng.
 
 Trong bài thực hành này, em sử dụng Apache JMeter để kiểm thử hiệu năng website Apache JMeter tại địa chỉ https://jmeter.apache.org/.
 
 ## 2. Mục tiêu
 
 - Làm quen với giao diện và cách sử dụng Apache JMeter.
-- Xây dựng Test Plan để gửi yêu cầu HTTP đến website.
+- Xây dựng Test Plan để kiểm thử website bằng HTTP Request.
 - Mô phỏng 50 người dùng ảo truy cập website.
-- Thu thập và phân tích kết quả kiểm thử.
-- Sử dụng Git và GitHub để lưu trữ bài thực hành, báo cáo và ảnh minh chứng.
+- Thu thập và phân tích các chỉ số hiệu năng.
+- Lưu trữ báo cáo và hình ảnh minh chứng trên GitHub.
 
 ## 3. Công cụ sử dụng
 
@@ -20,11 +20,11 @@ Trong bài thực hành này, em sử dụng Apache JMeter để kiểm thử hi
 |---|---|
 | Apache JMeter | 5.6.3 |
 | Java JDK | 21 |
-| Visual Studio Code | Chỉnh sửa README và quản lý dự án |
+| Visual Studio Code | Chỉnh sửa báo cáo |
 | Git | Quản lý phiên bản |
-| GitHub | Lưu trữ mã nguồn và báo cáo |
+| GitHub | Lưu trữ dự án |
 
-## 4. Cấu hình kiểm thử
+## 4. Thiết lập kiểm thử
 
 ### 4.1. Cấu hình Thread Group
 
@@ -35,7 +35,7 @@ Trong bài thực hành này, em sử dụng Apache JMeter để kiểm thử hi
 | Loop Count | 1 |
 | Số yêu cầu dự kiến | 50 |
 
-Thread Group được cấu hình để mô phỏng 50 người dùng ảo. Thời gian Ramp-up là 10 giây, nghĩa là JMeter khởi tạo người dùng trong khoảng thời gian này. Mỗi người dùng thực hiện một vòng lặp.
+Thread Group được thiết lập với 50 người dùng ảo, thời gian khởi tạo người dùng là 10 giây và mỗi người dùng thực hiện một vòng lặp. Với một HTTP Request trong mỗi vòng lặp, số yêu cầu dự kiến là 50.
 
 ### 4.2. Cấu hình HTTP Request
 
@@ -46,12 +46,12 @@ Thread Group được cấu hình để mô phỏng 50 người dùng ảo. Th�
 | Method | GET |
 | Path | / |
 
-HTTP Request sử dụng phương thức GET để gửi yêu cầu truy cập trang chủ website.
+HTTP Request sử dụng phương thức GET để gửi yêu cầu đến trang chủ website.
 
-### 4.3. Các Listener sử dụng
+### 4.3. Listener sử dụng
 
-- **View Results Tree:** Quan sát kết quả từng yêu cầu và thông tin phản hồi từ máy chủ.
-- **Summary Report:** Tổng hợp số lượng mẫu, thời gian phản hồi, tỷ lệ lỗi và thông lượng.
+- **View Results Tree:** Hiển thị kết quả chi tiết của từng yêu cầu, bao gồm thông tin phản hồi từ máy chủ.
+- **Summary Report:** Tổng hợp các chỉ số hiệu năng của lần kiểm thử.
 
 ## 5. Hình ảnh minh chứng
 
@@ -59,9 +59,9 @@ HTTP Request sử dụng phương thức GET để gửi yêu cầu truy cập t
 
 ![Tổng quan Test Plan](screenshots/01-test-plan.png)
 
-### 5.2. Cấu hình Thread Group với 50 người dùng
+### 5.2. Cấu hình Thread Group
 
-![Cấu hình Thread Group](screenshots/02-thread-group.png)
+![Cấu hình 50 người dùng](screenshots/02-thread-group.png)
 
 ### 5.3. Cấu hình HTTP Request
 
@@ -71,47 +71,52 @@ HTTP Request sử dụng phương thức GET để gửi yêu cầu truy cập t
 
 ![Kết quả View Results Tree](screenshots/04-test-results.png)
 
-### 5.5. Báo cáo tổng hợp Summary Report
+### 5.5. Báo cáo tổng hợp
 
 ![Kết quả Summary Report](screenshots/05-summary-report.png)
 
 ## 6. Kết quả kiểm thử
 
-Các chỉ số dưới đây cần được cập nhật theo Summary Report thực tế sau lần chạy 50 người dùng.
+Bài kiểm thử được cấu hình với 50 người dùng ảo, Ramp-up Period là 10 giây và Loop Count bằng 1. Các chỉ số hiệu năng được lấy từ Summary Report sau khi thực thi Test Plan.
 
-| Chỉ số | Kết quả |
-|---|---|
-| Tổng số yêu cầu (Samples) | Điền số liệu thực tế |
-| Thời gian phản hồi trung bình (Average) | Điền số liệu thực tế (ms) |
-| Thời gian phản hồi nhỏ nhất (Min) | Điền số liệu thực tế (ms) |
-| Thời gian phản hồi lớn nhất (Max) | Điền số liệu thực tế (ms) |
-| Tỷ lệ lỗi (Error %) | Điền số liệu thực tế |
-| Thông lượng (Throughput) | Điền số liệu thực tế |
+| STT | Chỉ số | Kết quả |
+|---:|---|---:|
+| 1 | Số người dùng ảo (Threads) | 50 |
+| 2 | Ramp-up Period | 10 giây |
+| 3 | Loop Count | 1 |
+| 4 | Tổng số yêu cầu (Samples) | Chưa xác nhận |
+| 5 | Thời gian phản hồi trung bình (Average) | Chưa xác nhận (ms) |
+| 6 | Thời gian phản hồi nhỏ nhất (Min) | Chưa xác nhận (ms) |
+| 7 | Thời gian phản hồi lớn nhất (Max) | Chưa xác nhận (ms) |
+| 8 | Tỷ lệ lỗi (Error %) | Chưa xác nhận |
+| 9 | Thông lượng (Throughput) | Chưa xác nhận |
 
-### 6.1. Nhận xét kết quả
+**Lưu ý:** Cấu hình dự kiến tạo ra 50 yêu cầu nếu mỗi người dùng gửi một yêu cầu và tất cả các mẫu được thực thi. Kết quả thực tế cần được xác nhận bằng Summary Report.
 
-Sau khi thực hiện kiểm thử, em sử dụng Summary Report để đánh giá khả năng phản hồi của website.
+### 6.1. Phân tích kết quả
 
-- **Samples:** Cho biết tổng số yêu cầu đã được thực hiện.
-- **Average:** Cho biết thời gian phản hồi trung bình của các yêu cầu.
-- **Min và Max:** Thể hiện thời gian phản hồi nhỏ nhất và lớn nhất.
-- **Error %:** Cho biết tỷ lệ yêu cầu xảy ra lỗi.
-- **Throughput:** Thể hiện số lượng yêu cầu được xử lý trong một đơn vị thời gian.
+Các chỉ số được sử dụng để đánh giá hiệu năng của website gồm:
 
-Thông qua các chỉ số trên, có thể đánh giá sơ bộ khả năng phản hồi của website trong lần kiểm thử. Tuy nhiên, kết quả chỉ phản ánh điều kiện thử nghiệm tại thời điểm chạy và không đủ để kết luận về giới hạn tải tối đa của hệ thống.
+- **Samples:** Tổng số yêu cầu đã thực hiện trong lần kiểm thử.
+- **Average:** Thời gian phản hồi trung bình của các yêu cầu, tính bằng mili giây.
+- **Min:** Thời gian phản hồi nhỏ nhất.
+- **Max:** Thời gian phản hồi lớn nhất.
+- **Error %:** Tỷ lệ yêu cầu xảy ra lỗi.
+- **Throughput:** Thông lượng xử lý yêu cầu trong một đơn vị thời gian.
+
+Thời gian phản hồi và tỷ lệ lỗi giúp đánh giá khả năng phản hồi của website trong điều kiện thử nghiệm. Thông lượng giúp quan sát số lượng yêu cầu được xử lý theo thời gian. Cần dựa trên số liệu thực tế để đưa ra nhận xét cụ thể, không thể kết luận giới hạn tải tối đa chỉ từ một lần kiểm thử.
 
 ## 7. Kết luận
 
-Qua bài thực hành, em đã làm quen với Apache JMeter, biết cách tạo Test Plan, cấu hình Thread Group, gửi yêu cầu HTTP và sử dụng các Listener để thu thập kết quả.
+Qua bài thực hành, em đã tìm hiểu cách sử dụng Apache JMeter để tạo Test Plan, thiết lập Thread Group, cấu hình HTTP Request và theo dõi kết quả bằng các Listener.
 
-Việc mô phỏng 50 người dùng giúp em hiểu rõ hơn cách kiểm thử hiệu năng và cách phân tích những chỉ số cơ bản như thời gian phản hồi, tỷ lệ lỗi và thông lượng. Báo cáo cùng hình ảnh minh chứng được lưu trữ trên GitHub để thuận tiện cho việc kiểm tra và đánh giá.
+Việc mô phỏng 50 người dùng ảo giúp em thực hành quy trình kiểm thử hiệu năng và làm quen với các chỉ số như thời gian phản hồi, tỷ lệ lỗi và thông lượng. Báo cáo và hình ảnh minh chứng được quản lý bằng Git và lưu trữ trên GitHub.
 
 ## 8. Tài liệu tham khảo
 
-- Trang chủ Apache JMeter: https://jmeter.apache.org/
-- Tài liệu hướng dẫn Apache JMeter: https://jmeter.apache.org/usermanual/
-- Kho lưu trữ bài thực hành: https://github.com/hongtuoi0208/jmeter-performance-testing
+- Apache JMeter: https://jmeter.apache.org/
+- Apache JMeter User Manual: https://jmeter.apache.org/usermanual/
 
 ## 9. Repository GitHub
 
-Link GitHub: https://github.com/hongtuoi0208/jmeter-performance-testing
+Link dự án: https://github.com/hongtuoi0208/jmeter-performance-testing
